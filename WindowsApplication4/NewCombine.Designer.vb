@@ -22,63 +22,72 @@ Partial Class Form1
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
+        Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Form1))
-        Me.Butt_set_Scale = New System.Windows.Forms.Button
-        Me.Text_scale = New System.Windows.Forms.TextBox
-        Me.Butt_select = New System.Windows.Forms.Button
-        Me.Zinbutt = New System.Windows.Forms.Button
-        Me.Setup = New System.Windows.Forms.Button
-        Me.Start_bending = New System.Windows.Forms.Button
-        Me.Start_points = New System.Windows.Forms.Button
-        Me.Open_butt = New System.Windows.Forms.Button
-        Me.GroupBox6 = New System.Windows.Forms.GroupBox
-        Me.GroupBox8 = New System.Windows.Forms.GroupBox
-        Me.Label15 = New System.Windows.Forms.Label
-        Me.Label14 = New System.Windows.Forms.Label
-        Me.Butt_Ext_Clamp_B = New System.Windows.Forms.Button
-        Me.Butt_Ext_Clamp_A = New System.Windows.Forms.Button
-        Me.GroupBox7 = New System.Windows.Forms.GroupBox
-        Me.Butt_Ext_HomeB = New System.Windows.Forms.Button
-        Me.Butt_Ext_HomeA = New System.Windows.Forms.Button
-        Me.Label17 = New System.Windows.Forms.Label
-        Me.Label16 = New System.Windows.Forms.Label
-        Me.Text_Ext_Forward = New System.Windows.Forms.TextBox
-        Me.Text_Ext_Previous = New System.Windows.Forms.TextBox
-        Me.Butt_extrude_fwd = New System.Windows.Forms.Button
-        Me.Butt_extrude_previous = New System.Windows.Forms.Button
-        Me.GroupBox9 = New System.Windows.Forms.GroupBox
-        Me.GroupBox12 = New System.Windows.Forms.GroupBox
-        Me.Text_Cutter_Fwd = New System.Windows.Forms.TextBox
-        Me.Butt_Cutter_Angle_Home = New System.Windows.Forms.Button
-        Me.Text_Cutter_Prev = New System.Windows.Forms.TextBox
-        Me.Butt_cutter_angle_plus = New System.Windows.Forms.Button
-        Me.Butt_Cutter_angle_minus = New System.Windows.Forms.Button
-        Me.GroupBox10 = New System.Windows.Forms.GroupBox
-        Me.Butt_cutter_Grind_Start = New System.Windows.Forms.Button
-        Me.GroupBox11 = New System.Windows.Forms.GroupBox
-        Me.Text_Lifter_Down = New System.Windows.Forms.TextBox
-        Me.Butt_cutter_lifter_home = New System.Windows.Forms.Button
-        Me.Text_Lifter_Up = New System.Windows.Forms.TextBox
-        Me.Butt_Cutter_lift_down = New System.Windows.Forms.Button
-        Me.Butt_Cutter_lift_up = New System.Windows.Forms.Button
-        Me.GroupBox13 = New System.Windows.Forms.GroupBox
-        Me.GroupBox16 = New System.Windows.Forms.GroupBox
-        Me.Text_Bending_Fwd = New System.Windows.Forms.TextBox
-        Me.Text_Bending_Prev = New System.Windows.Forms.TextBox
-        Me.Button12 = New System.Windows.Forms.Button
-        Me.Button13 = New System.Windows.Forms.Button
-        Me.Button14 = New System.Windows.Forms.Button
-        Me.Panel1 = New System.Windows.Forms.Panel
-        Me.mssg = New System.Windows.Forms.RichTextBox
-        Me.Label4 = New System.Windows.Forms.Label
-        Me.Label3 = New System.Windows.Forms.Label
-        Me.Label1 = New System.Windows.Forms.Label
-        Me.Label2 = New System.Windows.Forms.Label
-        Me.Label5 = New System.Windows.Forms.Label
-        Me.Label6 = New System.Windows.Forms.Label
-        Me.CheckBox1 = New System.Windows.Forms.CheckBox
-        Me.Label7 = New System.Windows.Forms.Label
-        Me.TextBox1 = New System.Windows.Forms.TextBox
+        Me.Butt_set_Scale = New System.Windows.Forms.Button()
+        Me.Text_scale = New System.Windows.Forms.TextBox()
+        Me.Butt_select = New System.Windows.Forms.Button()
+        Me.Zinbutt = New System.Windows.Forms.Button()
+        Me.Setup = New System.Windows.Forms.Button()
+        Me.Start_bending = New System.Windows.Forms.Button()
+        Me.Start_points = New System.Windows.Forms.Button()
+        Me.Open_butt = New System.Windows.Forms.Button()
+        Me.GroupBox6 = New System.Windows.Forms.GroupBox()
+        Me.GroupBox8 = New System.Windows.Forms.GroupBox()
+        Me.Label15 = New System.Windows.Forms.Label()
+        Me.Label14 = New System.Windows.Forms.Label()
+        Me.Butt_Ext_Clamp_B = New System.Windows.Forms.Button()
+        Me.Butt_Ext_Clamp_A = New System.Windows.Forms.Button()
+        Me.GroupBox7 = New System.Windows.Forms.GroupBox()
+        Me.Butt_Ext_HomeB = New System.Windows.Forms.Button()
+        Me.Butt_Ext_HomeA = New System.Windows.Forms.Button()
+        Me.Label17 = New System.Windows.Forms.Label()
+        Me.Label16 = New System.Windows.Forms.Label()
+        Me.Text_Ext_Forward = New System.Windows.Forms.TextBox()
+        Me.Text_Ext_Previous = New System.Windows.Forms.TextBox()
+        Me.Butt_extrude_fwd = New System.Windows.Forms.Button()
+        Me.Butt_extrude_previous = New System.Windows.Forms.Button()
+        Me.GroupBox9 = New System.Windows.Forms.GroupBox()
+        Me.GroupBox12 = New System.Windows.Forms.GroupBox()
+        Me.Text_Cutter_Fwd = New System.Windows.Forms.TextBox()
+        Me.Butt_Cutter_Angle_Home = New System.Windows.Forms.Button()
+        Me.Text_Cutter_Prev = New System.Windows.Forms.TextBox()
+        Me.Butt_cutter_angle_plus = New System.Windows.Forms.Button()
+        Me.Butt_Cutter_angle_minus = New System.Windows.Forms.Button()
+        Me.GroupBox10 = New System.Windows.Forms.GroupBox()
+        Me.Butt_cutter_Grind_Start = New System.Windows.Forms.Button()
+        Me.GroupBox11 = New System.Windows.Forms.GroupBox()
+        Me.Text_Lifter_Down = New System.Windows.Forms.TextBox()
+        Me.Butt_cutter_lifter_home = New System.Windows.Forms.Button()
+        Me.Text_Lifter_Up = New System.Windows.Forms.TextBox()
+        Me.Butt_Cutter_lift_down = New System.Windows.Forms.Button()
+        Me.Butt_Cutter_lift_up = New System.Windows.Forms.Button()
+        Me.GroupBox13 = New System.Windows.Forms.GroupBox()
+        Me.GroupBox16 = New System.Windows.Forms.GroupBox()
+        Me.Text_Bending_Fwd = New System.Windows.Forms.TextBox()
+        Me.Text_Bending_Prev = New System.Windows.Forms.TextBox()
+        Me.Button12 = New System.Windows.Forms.Button()
+        Me.Button13 = New System.Windows.Forms.Button()
+        Me.Button14 = New System.Windows.Forms.Button()
+        Me.Panel1 = New System.Windows.Forms.Panel()
+        Me.mssg = New System.Windows.Forms.RichTextBox()
+        Me.Label4 = New System.Windows.Forms.Label()
+        Me.Label3 = New System.Windows.Forms.Label()
+        Me.Label1 = New System.Windows.Forms.Label()
+        Me.Label2 = New System.Windows.Forms.Label()
+        Me.Label5 = New System.Windows.Forms.Label()
+        Me.Label6 = New System.Windows.Forms.Label()
+        Me.CheckBox1 = New System.Windows.Forms.CheckBox()
+        Me.Label7 = New System.Windows.Forms.Label()
+        Me.TextBox3 = New System.Windows.Forms.TextBox()
+        Me.txt_lich_su_1 = New System.Windows.Forms.TextBox()
+        Me.TextBox1 = New System.Windows.Forms.TextBox()
+        Me.GroupBox1 = New System.Windows.Forms.GroupBox()
+        Me.Button_Send = New System.Windows.Forms.Button()
+        Me.Button_Connect = New System.Windows.Forms.Button()
+        Me.ComboBox_AvailableSerialPorts = New System.Windows.Forms.ComboBox()
+        Me.SerialPort1 = New System.IO.Ports.SerialPort(Me.components)
+        Me.Label9 = New System.Windows.Forms.Label()
         Me.GroupBox6.SuspendLayout()
         Me.GroupBox8.SuspendLayout()
         Me.GroupBox7.SuspendLayout()
@@ -88,6 +97,7 @@ Partial Class Form1
         Me.GroupBox11.SuspendLayout()
         Me.GroupBox13.SuspendLayout()
         Me.GroupBox16.SuspendLayout()
+        Me.GroupBox1.SuspendLayout()
         Me.SuspendLayout()
         '
         'Butt_set_Scale
@@ -194,9 +204,9 @@ Partial Class Form1
         Me.GroupBox6.BackColor = System.Drawing.Color.Transparent
         Me.GroupBox6.Controls.Add(Me.GroupBox8)
         Me.GroupBox6.Controls.Add(Me.GroupBox7)
-        Me.GroupBox6.Location = New System.Drawing.Point(1013, 12)
+        Me.GroupBox6.Location = New System.Drawing.Point(883, 12)
         Me.GroupBox6.Name = "GroupBox6"
-        Me.GroupBox6.Size = New System.Drawing.Size(259, 201)
+        Me.GroupBox6.Size = New System.Drawing.Size(246, 201)
         Me.GroupBox6.TabIndex = 50
         Me.GroupBox6.TabStop = False
         Me.GroupBox6.Text = "EXTRUDE CONTROL"
@@ -366,9 +376,9 @@ Partial Class Form1
         Me.GroupBox9.Controls.Add(Me.GroupBox12)
         Me.GroupBox9.Controls.Add(Me.GroupBox10)
         Me.GroupBox9.Controls.Add(Me.GroupBox11)
-        Me.GroupBox9.Location = New System.Drawing.Point(1013, 219)
+        Me.GroupBox9.Location = New System.Drawing.Point(883, 219)
         Me.GroupBox9.Name = "GroupBox9"
-        Me.GroupBox9.Size = New System.Drawing.Size(259, 280)
+        Me.GroupBox9.Size = New System.Drawing.Size(246, 280)
         Me.GroupBox9.TabIndex = 51
         Me.GroupBox9.TabStop = False
         Me.GroupBox9.Text = "CUTTER CONTROL"
@@ -538,9 +548,9 @@ Partial Class Form1
         '
         Me.GroupBox13.BackColor = System.Drawing.Color.Transparent
         Me.GroupBox13.Controls.Add(Me.GroupBox16)
-        Me.GroupBox13.Location = New System.Drawing.Point(1013, 505)
+        Me.GroupBox13.Location = New System.Drawing.Point(883, 505)
         Me.GroupBox13.Name = "GroupBox13"
-        Me.GroupBox13.Size = New System.Drawing.Size(259, 123)
+        Me.GroupBox13.Size = New System.Drawing.Size(246, 123)
         Me.GroupBox13.TabIndex = 52
         Me.GroupBox13.TabStop = False
         Me.GroupBox13.Text = "BENDING CONTROL"
@@ -622,14 +632,13 @@ Partial Class Form1
         Me.Panel1.Cursor = System.Windows.Forms.Cursors.Cross
         Me.Panel1.Location = New System.Drawing.Point(11, 39)
         Me.Panel1.MaximumSize = New System.Drawing.Size(980, 600)
-        Me.Panel1.MinimumSize = New System.Drawing.Size(980, 600)
         Me.Panel1.Name = "Panel1"
-        Me.Panel1.Size = New System.Drawing.Size(980, 600)
+        Me.Panel1.Size = New System.Drawing.Size(850, 500)
         Me.Panel1.TabIndex = 53
         '
         'mssg
         '
-        Me.mssg.Location = New System.Drawing.Point(895, 2)
+        Me.mssg.Location = New System.Drawing.Point(749, 2)
         Me.mssg.Name = "mssg"
         Me.mssg.Size = New System.Drawing.Size(96, 31)
         Me.mssg.TabIndex = 54
@@ -638,7 +647,7 @@ Partial Class Form1
         'Label4
         '
         Me.Label4.AutoSize = True
-        Me.Label4.Location = New System.Drawing.Point(502, 662)
+        Me.Label4.Location = New System.Drawing.Point(516, 546)
         Me.Label4.Name = "Label4"
         Me.Label4.Size = New System.Drawing.Size(39, 13)
         Me.Label4.TabIndex = 56
@@ -647,7 +656,7 @@ Partial Class Form1
         'Label3
         '
         Me.Label3.AutoSize = True
-        Me.Label3.Location = New System.Drawing.Point(637, 662)
+        Me.Label3.Location = New System.Drawing.Point(651, 546)
         Me.Label3.Name = "Label3"
         Me.Label3.Size = New System.Drawing.Size(39, 13)
         Me.Label3.TabIndex = 55
@@ -656,7 +665,7 @@ Partial Class Form1
         'Label1
         '
         Me.Label1.AutoSize = True
-        Me.Label1.Location = New System.Drawing.Point(385, 662)
+        Me.Label1.Location = New System.Drawing.Point(399, 546)
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(39, 13)
         Me.Label1.TabIndex = 57
@@ -665,7 +674,7 @@ Partial Class Form1
         'Label2
         '
         Me.Label2.AutoSize = True
-        Me.Label2.Location = New System.Drawing.Point(265, 662)
+        Me.Label2.Location = New System.Drawing.Point(279, 546)
         Me.Label2.Name = "Label2"
         Me.Label2.Size = New System.Drawing.Size(39, 13)
         Me.Label2.TabIndex = 58
@@ -674,7 +683,7 @@ Partial Class Form1
         'Label5
         '
         Me.Label5.AutoSize = True
-        Me.Label5.Location = New System.Drawing.Point(139, 660)
+        Me.Label5.Location = New System.Drawing.Point(153, 544)
         Me.Label5.Name = "Label5"
         Me.Label5.Size = New System.Drawing.Size(39, 13)
         Me.Label5.TabIndex = 59
@@ -683,7 +692,7 @@ Partial Class Form1
         'Label6
         '
         Me.Label6.AutoSize = True
-        Me.Label6.Location = New System.Drawing.Point(34, 662)
+        Me.Label6.Location = New System.Drawing.Point(48, 546)
         Me.Label6.Name = "Label6"
         Me.Label6.Size = New System.Drawing.Size(39, 13)
         Me.Label6.TabIndex = 60
@@ -702,26 +711,100 @@ Partial Class Form1
         'Label7
         '
         Me.Label7.AutoSize = True
-        Me.Label7.Location = New System.Drawing.Point(732, 662)
+        Me.Label7.Location = New System.Drawing.Point(746, 546)
         Me.Label7.Name = "Label7"
         Me.Label7.Size = New System.Drawing.Size(39, 13)
         Me.Label7.TabIndex = 62
         Me.Label7.Text = "Label7"
         '
+        'TextBox3
+        '
+        Me.TextBox3.Location = New System.Drawing.Point(519, 2)
+        Me.TextBox3.Name = "TextBox3"
+        Me.TextBox3.Size = New System.Drawing.Size(81, 20)
+        Me.TextBox3.TabIndex = 63
+        '
+        'txt_lich_su_1
+        '
+        Me.txt_lich_su_1.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txt_lich_su_1.ForeColor = System.Drawing.Color.LimeGreen
+        Me.txt_lich_su_1.Location = New System.Drawing.Point(11, 565)
+        Me.txt_lich_su_1.Multiline = True
+        Me.txt_lich_su_1.Name = "txt_lich_su_1"
+        Me.txt_lich_su_1.ScrollBars = System.Windows.Forms.ScrollBars.Vertical
+        Me.txt_lich_su_1.Size = New System.Drawing.Size(625, 112)
+        Me.txt_lich_su_1.TabIndex = 64
+        '
         'TextBox1
         '
-        Me.TextBox1.Location = New System.Drawing.Point(519, 2)
+        Me.TextBox1.Location = New System.Drawing.Point(1135, 20)
+        Me.TextBox1.Multiline = True
         Me.TextBox1.Name = "TextBox1"
-        Me.TextBox1.Size = New System.Drawing.Size(81, 20)
-        Me.TextBox1.TabIndex = 63
+        Me.TextBox1.ScrollBars = System.Windows.Forms.ScrollBars.Vertical
+        Me.TextBox1.Size = New System.Drawing.Size(211, 505)
+        Me.TextBox1.TabIndex = 66
+        '
+        'GroupBox1
+        '
+        Me.GroupBox1.BackColor = System.Drawing.Color.Transparent
+        Me.GroupBox1.Controls.Add(Me.Button_Send)
+        Me.GroupBox1.Controls.Add(Me.Button_Connect)
+        Me.GroupBox1.Controls.Add(Me.ComboBox_AvailableSerialPorts)
+        Me.GroupBox1.Location = New System.Drawing.Point(1124, 542)
+        Me.GroupBox1.Name = "GroupBox1"
+        Me.GroupBox1.Size = New System.Drawing.Size(211, 124)
+        Me.GroupBox1.TabIndex = 65
+        Me.GroupBox1.TabStop = False
+        Me.GroupBox1.Text = "ARDUINO CONNECT"
+        '
+        'Button_Send
+        '
+        Me.Button_Send.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Button_Send.Location = New System.Drawing.Point(111, 72)
+        Me.Button_Send.Name = "Button_Send"
+        Me.Button_Send.Size = New System.Drawing.Size(94, 33)
+        Me.Button_Send.TabIndex = 59
+        Me.Button_Send.Text = "Send Data"
+        Me.Button_Send.UseVisualStyleBackColor = True
+        '
+        'Button_Connect
+        '
+        Me.Button_Connect.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Button_Connect.Location = New System.Drawing.Point(6, 72)
+        Me.Button_Connect.Name = "Button_Connect"
+        Me.Button_Connect.Size = New System.Drawing.Size(94, 33)
+        Me.Button_Connect.TabIndex = 58
+        Me.Button_Connect.Text = "Connect"
+        Me.Button_Connect.UseVisualStyleBackColor = True
+        '
+        'ComboBox_AvailableSerialPorts
+        '
+        Me.ComboBox_AvailableSerialPorts.FormattingEnabled = True
+        Me.ComboBox_AvailableSerialPorts.Location = New System.Drawing.Point(5, 22)
+        Me.ComboBox_AvailableSerialPorts.Name = "ComboBox_AvailableSerialPorts"
+        Me.ComboBox_AvailableSerialPorts.Size = New System.Drawing.Size(112, 21)
+        Me.ComboBox_AvailableSerialPorts.TabIndex = 57
+        '
+        'Label9
+        '
+        Me.Label9.AutoSize = True
+        Me.Label9.Location = New System.Drawing.Point(989, 664)
+        Me.Label9.Name = "Label9"
+        Me.Label9.Size = New System.Drawing.Size(39, 13)
+        Me.Label9.TabIndex = 68
+        Me.Label9.Text = "Label9"
         '
         'Form1
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.SystemColors.Control
-        Me.ClientSize = New System.Drawing.Size(1284, 682)
+        Me.ClientSize = New System.Drawing.Size(1354, 689)
+        Me.Controls.Add(Me.Label9)
         Me.Controls.Add(Me.TextBox1)
+        Me.Controls.Add(Me.GroupBox1)
+        Me.Controls.Add(Me.txt_lich_su_1)
+        Me.Controls.Add(Me.TextBox3)
         Me.Controls.Add(Me.Label7)
         Me.Controls.Add(Me.CheckBox1)
         Me.Controls.Add(Me.Label6)
@@ -744,7 +827,7 @@ Partial Class Form1
         Me.Controls.Add(Me.Start_points)
         Me.Controls.Add(Me.Open_butt)
         Me.DoubleBuffered = True
-        Me.MaximumSize = New System.Drawing.Size(1300, 720)
+        Me.MaximumSize = New System.Drawing.Size(1370, 772)
         Me.MinimumSize = New System.Drawing.Size(1300, 720)
         Me.Name = "Form1"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
@@ -764,6 +847,7 @@ Partial Class Form1
         Me.GroupBox13.ResumeLayout(False)
         Me.GroupBox16.ResumeLayout(False)
         Me.GroupBox16.PerformLayout()
+        Me.GroupBox1.ResumeLayout(False)
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -817,12 +901,20 @@ Partial Class Form1
     Friend WithEvents Button14 As System.Windows.Forms.Button
     Friend WithEvents CheckBox1 As System.Windows.Forms.CheckBox
     Friend WithEvents Label7 As System.Windows.Forms.Label
-    Friend WithEvents TextBox1 As System.Windows.Forms.TextBox
+    Friend WithEvents TextBox3 As System.Windows.Forms.TextBox
     Friend WithEvents Text_Cutter_Fwd As System.Windows.Forms.TextBox
     Friend WithEvents Text_Cutter_Prev As System.Windows.Forms.TextBox
     Friend WithEvents Text_Lifter_Down As System.Windows.Forms.TextBox
     Friend WithEvents Text_Lifter_Up As System.Windows.Forms.TextBox
     Friend WithEvents Text_Bending_Fwd As System.Windows.Forms.TextBox
     Friend WithEvents Text_Bending_Prev As System.Windows.Forms.TextBox
+    Friend WithEvents txt_lich_su_1 As System.Windows.Forms.TextBox
+    Friend WithEvents TextBox1 As System.Windows.Forms.TextBox
+    Friend WithEvents GroupBox1 As System.Windows.Forms.GroupBox
+    Friend WithEvents Button_Send As System.Windows.Forms.Button
+    Friend WithEvents Button_Connect As System.Windows.Forms.Button
+    Friend WithEvents ComboBox_AvailableSerialPorts As System.Windows.Forms.ComboBox
+    Friend WithEvents SerialPort1 As System.IO.Ports.SerialPort
+    Friend WithEvents Label9 As System.Windows.Forms.Label
 
 End Class

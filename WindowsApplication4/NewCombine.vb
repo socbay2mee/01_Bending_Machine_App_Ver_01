@@ -48,6 +48,122 @@ Public Class Form1
     Dim is_dragging As Boolean = False
     Dim first_drag As Boolean = True
     Dim load_successed As Boolean = False
+
+    Private mySerialPort As New SerialPort
+    Dim Data_Recive As String
+    Private Delegate Sub UpdateFormDelegate()
+    Private UpdateFormDelegate1 As UpdateFormDelegate
+
+    Public Class clsIni
+        ' API functions
+        Private Declare Ansi Function GetPrivateProfileString _
+          Lib "kernel32.dll" Alias "GetPrivateProfileStringA" _
+          (ByVal lpApplicationName As String, _
+          ByVal lpKeyName As String, ByVal lpDefault As String, ByVal lpReturnedString As System.Text.StringBuilder, _
+          ByVal nSize As Integer, ByVal lpFileName As String) As Integer
+
+        Private Declare Ansi Function WritePrivateProfileString _
+          Lib "kernel32.dll" Alias "WritePrivateProfileStringA" _
+          (ByVal lpApplicationName As String, ByVal lpKeyName As String, ByVal lpString As String, ByVal lpFileName As String) As Integer
+
+        Private Declare Ansi Function GetPrivateProfileInt _
+          Lib "kernel32.dll" Alias "GetPrivateProfileIntA" _
+          (ByVal lpApplicationName As String, ByVal lpKeyName As String, ByVal nDefault As Integer, ByVal lpFileName As String) As Integer
+
+        Private Declare Ansi Function FlushPrivateProfileString _
+          Lib "kernel32.dll" Alias "WritePrivateProfileStringA" _
+          (ByVal lpApplicationName As Integer, ByVal lpKeyName As Integer, ByVal lpString As Integer, ByVal lpFileName As String) As Integer
+        Dim strFilename As String
+
+        ' Constructor, accepting a filename
+        Public Sub New(ByVal Filename As String)
+            strFilename = Filename
+        End Sub
+
+        ' Read-only filename property
+        ReadOnly Property FileName() As String
+            Get
+                Return strFilename
+            End Get
+        End Property
+
+        Public Function GetString(ByVal Section As String, ByVal Key As String, ByVal [Default] As String) As String
+            ' Returns a string from your INI file
+            Dim intCharCount As Integer
+            Dim objResult As New System.Text.StringBuilder(256)
+            intCharCount = GetPrivateProfileString(Section, Key, [Default], objResult, objResult.Capacity, strFilename)
+            Return objResult.ToString()
+        End Function
+
+        Public Function GetInteger(ByVal Section As String, ByVal Key As String, ByVal [Default] As Integer) As Integer
+            ' Returns an integer from your INI file
+            Return GetPrivateProfileInt(Section, Key, [Default], strFilename)
+        End Function
+
+        Public Function GetBoolean(ByVal Section As String, ByVal Key As String, ByVal [Default] As Boolean) As Boolean
+            ' Returns a boolean from your INI file
+            Return (GetPrivateProfileInt(Section, Key, CInt([Default]), strFilename) = 1)
+        End Function
+
+        Public Sub WriteString(ByVal Section As String, ByVal Key As String, ByVal Value As String)
+            ' Writes a string to your INI file
+            WritePrivateProfileString(Section, Key, Value, strFilename)
+            Flush()
+        End Sub
+
+        Public Sub WriteInteger(ByVal Section As String, ByVal Key As String, ByVal Value As Integer)
+            ' Writes an integer to your INI file
+            WriteString(Section, Key, CStr(Value))
+            Flush()
+        End Sub
+
+        Public Sub WriteBoolean(ByVal Section As String, ByVal Key As String, ByVal Value As Boolean)
+            ' Writes a boolean to your INI file
+            WriteString(Section, Key, CStr(CInt(Value)))
+            Flush()
+        End Sub
+
+        Private Sub Flush()
+            ' Stores all the cached changes to your INI file
+            FlushPrivateProfileString(0, 0, 0, strFilename)
+        End Sub
+    End Class
+
+    Private Sub Form1_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
+        gpanel = Panel1.CreateGraphics
+        scale_factor(2) = 0.16777216
+        scale_factor(3) = 0.2097152
+        scale_factor(4) = 0.262144
+        scale_factor(5) = 0.32768
+        scale_factor(6) = 0.4096
+        scale_factor(7) = 0.512
+        scale_factor(8) = 0.64
+        scale_factor(9) = 0.8
+        scale_factor(10) = 1
+        scale_factor(11) = 1.25
+        scale_factor(12) = 1.5625
+        scale_factor(13) = 1.953125
+        scale_factor(14) = 2.44140625
+        scale_factor(15) = 3.0517578125
+        scale_factor(16) = 3.814697265625
+        scale_factor(17) = 4.76837158203125
+        scale_factor(18) = 5.9604644775390634
+        load_successed = True
+
+        Dim objIniFile As New clsIni("E:\WorldInfo.ini")
+        objIniFile.WriteString("Software_Config", "COM", "fjsdfdskjfhsd")
+        Label3.Text = objIniFile.GetString("Machine_Config", "OffSet", "")
+
+        gpanel = Panel1.CreateGraphics
+        AddHandler mySerialPort.DataReceived, AddressOf mySerialPort_DataReceived
+        For Each AvailableSerialPorts As String In SerialPort.GetPortNames()
+            ComboBox_AvailableSerialPorts.Items.Add(AvailableSerialPorts)
+            SerialPort1.ReadTimeout = 2000
+            ComboBox_AvailableSerialPorts.Text = AvailableSerialPorts
+            Button_Connect.Visible = True
+
+        Next
+    End Sub
     Private Sub Open_butt_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Open_butt.Click
         Dim OpenfileDialog1 As New OpenFileDialog
         If OpenfileDialog1.ShowDialog() = System.Windows.Forms.DialogResult.OK Then
@@ -991,28 +1107,7 @@ Public Class Form1
         'extrude_poly()
     End Sub
 
-    Private Sub Form1_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
-        gpanel = Panel1.CreateGraphics
-        scale_factor(2) = 0.16777216
-        scale_factor(3) = 0.2097152
-        scale_factor(4) = 0.262144
-        scale_factor(5) = 0.32768
-        scale_factor(6) = 0.4096
-        scale_factor(7) = 0.512
-        scale_factor(8) = 0.64
-        scale_factor(9) = 0.8
-        scale_factor(10) = 1
-        scale_factor(11) = 1.25
-        scale_factor(12) = 1.5625
-        scale_factor(13) = 1.953125
-        scale_factor(14) = 2.44140625
-        scale_factor(15) = 3.0517578125
-        scale_factor(16) = 3.814697265625
-        scale_factor(17) = 4.76837158203125
-        scale_factor(18) = 5.9604644775390634
-        load_successed = True
-
-    End Sub
+    
 
     Private Sub Panel1_MouseDown(ByVal sender As Object, ByVal e As System.Windows.Forms.MouseEventArgs) Handles Panel1.MouseDown
         If e.Button = Windows.Forms.MouseButtons.Right Then
@@ -1043,7 +1138,72 @@ Public Class Form1
             is_selected(i1) = False
         Next
     End Sub
+
+    Private Sub Button_Connect_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button_Connect.Click
+        If (Button_Connect.Text = "Connect") Then
+            mySerialPort.BaudRate = CInt("250000")
+            mySerialPort.PortName = CStr(ComboBox_AvailableSerialPorts.SelectedItem)
+            If mySerialPort.IsOpen = False Then
+                mySerialPort.Open()
+            End If
+            Button_Connect.Text = "Disconnect"
+            Button_Connect.ForeColor = Color.Red
+        Else
+            If mySerialPort.IsOpen = True Then
+                mySerialPort.Close()
+            End If
+            Button_Connect.Text = "Connect"
+            Button_Connect.ForeColor = Color.Blue
+        End If
+    End Sub
+    Private Sub mySerialPort_DataReceived(ByVal sender As Object, ByVal e As SerialDataReceivedEventArgs)
+        'Handles serial port data received events
+        UpdateFormDelegate1 = New UpdateFormDelegate(AddressOf UpdateDisplay)
+        Data_Recive = mySerialPort.ReadTo("/n") 'read data from the buffer
+        Me.Invoke(UpdateFormDelegate1) 'call the delegate
+    End Sub
+    Private Sub UpdateDisplay()
+        TextBox1.Text = Data_Recive.Trim()
+        If (CStr(Data_Recive.Trim().CompareTo(mssg.Text.Trim())) = "0") Then
+            txt_lich_su_1.ForeColor = Color.LimeGreen
+            txt_lich_su_1.Text = "==>  " + DateTime.Now.ToString("dd-MM-yyyy  |  hh:mm:ss tt") + " : Send Data Successfull" + vbNewLine + txt_lich_su_1.Text
+            Dim ans As DialogResult = MessageBox.Show("Data Send Succesfull. Do you want to run the machine ???", "Run Machine", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
+
+            If ans = DialogResult.Yes Then
+                mySerialPort.Write("R")
+                txt_lich_su_1.Text = "==>  " + DateTime.Now.ToString("dd-MM-yyyy  |  hh:mm:ss tt") + " : Machine is Running" + vbNewLine + txt_lich_su_1.Text
+            ElseIf ans = DialogResult.No Then
+                mySerialPort.Write("S")
+                txt_lich_su_1.Text = "==>  " + DateTime.Now.ToString("dd-MM-yyyy  |  hh:mm:ss tt") + " : Machine is Not Running" + vbNewLine + txt_lich_su_1.Text
+                'Do nothing
+            End If
+        ElseIf (CStr(Data_Recive.Trim().CompareTo("OK")) = "0") Then
+            txt_lich_su_1.Text = "==>  " + DateTime.Now.ToString("dd-MM-yyyy  |  hh:mm:ss tt") + " : Machine Run Done" + vbNewLine + txt_lich_su_1.Text
+            Button_Send.Enabled = True
+        Else
+            txt_lich_su_1.Text = "==>  " + DateTime.Now.ToString("dd-MM-yyyy  |  hh:mm:ss tt") + " : Send Data Error" + vbNewLine + txt_lich_su_1.Text
+            txt_lich_su_1.ForeColor = Color.Red
+            Button_Send.Enabled = True
+        End If
+
+
+    End Sub
+
+    Private Sub Button_Send_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button_Send.Click
+        Dim Length_Data As Int32 = mssg.Text.Length()
+        Dim Data_0 As String
+        Data_0 = mssg.Text.Trim()
+        Static Dim First_Push As Int32 = 0
+        mySerialPort.WriteLine(Data_0 + "/n")
+        ' Label8.Text = Data_0
+        Button_Send.Enabled = False
+
+        Label9.Text = CStr(Length_Data)
+        txt_lich_su_1.Text = "==>  " + DateTime.Now.ToString("dd-MM-yyyy  |  hh:mm:ss tt") + " : Send Data to Arduino" + vbNewLine + txt_lich_su_1.Text
+    End Sub
 End Class
+
+
 
 
 
