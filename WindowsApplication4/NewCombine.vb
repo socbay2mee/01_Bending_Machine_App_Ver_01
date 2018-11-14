@@ -164,30 +164,7 @@ Public Class Form1
 
         Next
     End Sub
-    Private Sub Open_butt_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Open_butt.Click
-        Dim OpenfileDialog1 As New OpenFileDialog
-        If OpenfileDialog1.ShowDialog() = System.Windows.Forms.DialogResult.OK Then
-            sr = New System.IO.StreamReader(OpenfileDialog1.FileName)
-            initialize_file()
-            get_the_coords()
-            transform_coords()
-            movecoords(dx, dy)
-            draw_poly_panel()
-            in_outside()
-            area_and_direct()
-            corect_direct()
-            len_measure()
-            angle_measure()
-            Poly_scale = 1
-            Text_scale.Text = "100"
-            mssg.Text = ""
-            export_coords()
-            draw_points()
-            printtext_poly()
-            'extrude_poly()
-        End If
-
-    End Sub
+    
     Sub export_coords()
         For i1 = 1 To numofpoints(1)
             mssg.Text += i1.ToString + ": " + coords(1, i1).X.ToString + " " + coords(1, i1).Y.ToString + " "
@@ -274,7 +251,7 @@ Public Class Form1
         dy_sc = 0
         pp.X = 0
         pp.Y = 0
-        Butt_select.Text = "Select"
+        ToolStripButton14.Text = "Select"
         'reset str
         str = ""
         'reset minx & miny
@@ -593,24 +570,7 @@ Public Class Form1
             Next
         Next
     End Sub
-    Private Sub Zinbutt_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Zinbutt.Click
-        If numofpoly > 0 Then
-            scx = 10
-            scy = 10
-            offsX = 0
-            offsY = 0
-            dx_sc = 0
-            dy_sc = 0
-            Panel1.Refresh()
-            gpanel.ResetTransform()
-            Me.Panel1.Refresh()
-            draw_poly_panel()
-            draw_points()
-            printtext_poly()
-            'extrude_poly()
-            'export_coords()
-        End If
-    End Sub
+
    
     Private Sub transform_coords()
         Dim i1 As Integer
@@ -652,9 +612,7 @@ Public Class Form1
             Next
         Next
     End Sub
-    Private Sub Start_points_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Start_points.Click
 
-    End Sub
     Sub corect_direct()
         Dim j1 As Integer
         Dim tmp As PointF
@@ -783,20 +741,7 @@ Public Class Form1
 
     End Sub
 
-    Private Sub Start_bending_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Start_bending.Click
-        offs = 25
-        Processing = True
-        mssg.Text = poly_len(1).ToString
-        For i1 = 1 To numofpoly
-            If poly_len(i1) - len(coords(i1, 1), coords(i1, 2)) > offs Then
-                long_process(i1)
-            Else
-                short_process(i1)
-            End If
-        Next
-        'len_measure()
-        Processing = False
-    End Sub
+
     Sub long_process(ByVal i2 As Integer)
         Dim excess As Double = 5
         Dim seg As Double
@@ -1008,31 +953,9 @@ Public Class Form1
         is_dragging = False
         Label1.Text = gpanel.ClipBounds.Height.ToString
     End Sub
-    Private Sub Button3_Click_1(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Setup.Click
-        Dim form2 As New Form
-        Dim Butt_set_offset As New Button
-        form2.Text = "SET UP"
-        Butt_set_offset.Text = "SET OFFSET"
-
-        Butt_set_offset.Location = New Point(20, 20)
-        Butt_set_offset.Size = New Size(70, 20)
-        Butt_set_offset.FlatStyle = New FlatStyle
-        Butt_set_offset.FlatAppearance.BorderSize = 1
 
 
-        form2.Controls.Add(Butt_set_offset)
-        form2.Show()
 
-    End Sub
-
-    Private Sub Butt_set_Scale_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Butt_set_Scale.Click
-        If Processing = False Then
-            If IsNumeric(Text_scale.Text) Then
-                Poly_scale = CDbl(Text_scale.Text) / 100
-            End If
-        End If
-        mssg.Text = Poly_scale.ToString
-    End Sub
     Private Sub Butt_extrude_previous_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Butt_extrude_previous.Click
         If Processing = False Then
             If IsNumeric(Text_Ext_Previous) Then
@@ -1048,15 +971,7 @@ Public Class Form1
             End If
         End If
     End Sub
-    Private Sub Butt_select_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Butt_select.Click
-        If start_select = True Then
-            start_select = False
-            Butt_select.Text = "Select"
-        Else
-            start_select = True
-            Butt_select.Text = "Selecting..."
-        End If
-    End Sub
+ 
 
     Private Sub Panel1_MouseClick(ByVal sender As Object, ByVal e As System.Windows.Forms.MouseEventArgs) Handles Panel1.MouseClick
         Dim p As PointF
@@ -1117,17 +1032,7 @@ Public Class Form1
         End If
     End Sub
     
-    Private Sub CheckBox1_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles CheckBox1.CheckedChanged
-        If CheckBox1.Checked = True And start_select = True Then
-            set_all_selected()
-        ElseIf CheckBox1.Checked = False And start_select = True Then
-            set_all_unselected()
-        End If
-        Panel1.Refresh()
-        draw_poly_panel()
-        draw_points()
-        printtext_poly()
-    End Sub
+
     Sub set_all_selected()
         For i1 = 1 To numofpoly
             is_selected(i1) = True
@@ -1200,6 +1105,129 @@ Public Class Form1
 
         Label9.Text = CStr(Length_Data)
         txt_lich_su_1.Text = "==>  " + DateTime.Now.ToString("dd-MM-yyyy  |  hh:mm:ss tt") + " : Send Data to Arduino" + vbNewLine + txt_lich_su_1.Text
+    End Sub
+
+    Private Sub ToolStrip1_ItemClicked(ByVal sender As System.Object, ByVal e As System.Windows.Forms.ToolStripItemClickedEventArgs) Handles ToolStrip1.ItemClicked
+
+    End Sub
+
+    Private Sub ToolStripLabel2_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ToolStripLabel2.Click
+
+    End Sub
+
+    Private Sub OpenToolStripButton_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles OpenToolStripButton.Click
+        Dim OpenfileDialog1 As New OpenFileDialog
+        If OpenfileDialog1.ShowDialog() = System.Windows.Forms.DialogResult.OK Then
+            sr = New System.IO.StreamReader(OpenfileDialog1.FileName)
+            initialize_file()
+            get_the_coords()
+            transform_coords()
+            movecoords(dx, dy)
+            draw_poly_panel()
+            in_outside()
+            area_and_direct()
+            corect_direct()
+            len_measure()
+            angle_measure()
+            Poly_scale = 1
+            Text_scale.Text = "100"
+            mssg.Text = ""
+            export_coords()
+            draw_points()
+            printtext_poly()
+            'extrude_poly()
+        End If
+    End Sub
+
+    Private Sub ToolStripButton2_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ToolStripButton2.Click
+        If numofpoly > 0 Then
+            scx = 10
+            scy = 10
+            offsX = 0
+            offsY = 0
+            dx_sc = 0
+            dy_sc = 0
+            Panel1.Refresh()
+            gpanel.ResetTransform()
+            Me.Panel1.Refresh()
+            draw_poly_panel()
+            draw_points()
+            printtext_poly()
+            'extrude_poly()
+            'export_coords()
+        End If
+    End Sub
+
+    Private Sub TextBox3_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs)
+
+    End Sub
+
+    Private Sub ToolStripButton14_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ToolStripButton14.Click
+        If start_select = True Then
+            start_select = False
+            ToolStripButton14.Text = "Select"
+        Else
+            start_select = True
+            ToolStripButton14.Text = "Selecting..."
+        End If
+    End Sub
+
+    Private Sub ToolStripButton15_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ToolStripButton15.Click
+        set_all_unselected()
+
+        
+    End Sub
+
+    Private Sub ToolStripButton17_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ToolStripButton17.Click
+        set_all_selected()
+        Panel1.Refresh()
+        draw_poly_panel()
+        draw_points()
+        printtext_poly()
+    End Sub
+
+    Private Sub Text_scale_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Text_scale.TextChanged
+
+    End Sub
+
+    Private Sub ToolStripButton16_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ToolStripButton16.Click
+        Dim form2 As New Form
+        Dim Butt_set_offset As New Button
+        form2.Text = "SET UP"
+        Butt_set_offset.Text = "SET OFFSET"
+
+        Butt_set_offset.Location = New Point(20, 20)
+        Butt_set_offset.Size = New Size(70, 20)
+        Butt_set_offset.FlatStyle = New FlatStyle
+        Butt_set_offset.FlatAppearance.BorderSize = 1
+
+
+        form2.Controls.Add(Butt_set_offset)
+        form2.Show()
+    End Sub
+
+    Private Sub ToolStripButton18_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ToolStripButton18.Click
+        If Processing = False Then
+            If IsNumeric(Text_scale.Text) Then
+                Poly_scale = CDbl(Text_scale.Text) / 100
+            End If
+        End If
+        mssg.Text = Poly_scale.ToString
+    End Sub
+
+    Private Sub ToolStripButton19_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ToolStripButton19.Click
+        offs = 25
+        Processing = True
+        mssg.Text = poly_len(1).ToString
+        For i1 = 1 To numofpoly
+            If poly_len(i1) - len(coords(i1, 1), coords(i1, 2)) > offs Then
+                long_process(i1)
+            Else
+                short_process(i1)
+            End If
+        Next
+        'len_measure()
+        Processing = False
     End Sub
 End Class
 
