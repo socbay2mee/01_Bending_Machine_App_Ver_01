@@ -29,3 +29,4 @@ C:\Users\socbay2me\Dropbox\Learn by myselft\Du_an\13_Letter_Bending_Machine\01_S
 C:\Users\socbay2me\Downloads\01_Bending_Machine_App_Ver_01-91aeb93d1f830060c08fb2386388541e6961537b\WindowsApplication4\obj\Debug\WindowsApplication4.exe
 C:\Users\socbay2me\Downloads\01_Bending_Machine_App_Ver_01-91aeb93d1f830060c08fb2386388541e6961537b\WindowsApplication4\obj\Debug\WindowsApplication4.xml
 C:\Users\socbay2me\Downloads\01_Bending_Machine_App_Ver_01-91aeb93d1f830060c08fb2386388541e6961537b\WindowsApplication4\obj\Debug\WindowsApplication4.pdb
+C:\Users\socbay2me\Dropbox\Learn by myselft\Du_an\13_Letter_Bending_Machine\01_Software\00_Application\01_Bending_Machine_App_Ver_01\WindowsApplication4\obj\Debug\WindowsApplication4.Form_Setup.resources

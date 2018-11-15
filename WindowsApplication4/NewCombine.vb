@@ -1190,20 +1190,9 @@ Public Class Form1
 
     End Sub
 
-    Private Sub ToolStripButton16_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ToolStripButton16.Click
-        Dim form2 As New Form
-        Dim Butt_set_offset As New Button
-        form2.Text = "SET UP"
-        Butt_set_offset.Text = "SET OFFSET"
-
-        Butt_set_offset.Location = New Point(20, 20)
-        Butt_set_offset.Size = New Size(70, 20)
-        Butt_set_offset.FlatStyle = New FlatStyle
-        Butt_set_offset.FlatAppearance.BorderSize = 1
-
-
-        form2.Controls.Add(Butt_set_offset)
-        form2.Show()
+    Private Sub ToolStripButton_Setup_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ToolStripButton_Setup.Click
+        Form_Setup.Text = "SET UP"
+        Form_Setup.Show()
     End Sub
 
     Private Sub ToolStripButton18_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ToolStripButton18.Click
