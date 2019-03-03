@@ -5,8 +5,8 @@ Imports System.Drawing.Drawing2D
 Public Class Form1
     Private ppoint As Point
     Dim poly_len(100) As Double
-    Dim coords(100, 500) As PointF
-    Dim ang_out(100, 500) As Single
+    Dim coords(100, 5000) As PointF
+    Dim ang_out(100, 5000) As Single
     Dim numofpoints(100) As Integer
     Dim numofpoly As Integer = 0
     Dim i As Integer
@@ -31,14 +31,13 @@ Public Class Form1
     Dim dy, dy_sc As Single
     Dim text_size As Integer = 8
     Dim pp As PointF
-    Dim coord(0 To 500) As PointF
+    Dim coord(0 To 5000) As PointF
     Dim right_direct(0 To 100) As Boolean
     Dim bend_display As Boolean = False
     Dim offs As Double
     Dim start_bend_of(0 To 500) As Integer
     Dim seg_bend(0 To 500) As Integer
     Dim coordsBackUp(0 To 500) As PointF
-    Dim Poly_scale As Double
     Dim Processing As Boolean
     Dim offsX, offsY As Single
     Dim w, h As Single
@@ -48,9 +47,10 @@ Public Class Form1
     Dim is_dragging As Boolean = False
     Dim first_drag As Boolean = True
     Dim load_successed As Boolean = False
-
+    Dim p1, p2, p3, p4 As PointF
     Private mySerialPort As New SerialPort
     Dim Data_Recive As String
+    Dim point_num As Integer
     Private Delegate Sub UpdateFormDelegate()
     Private UpdateFormDelegate1 As UpdateFormDelegate
 
@@ -170,7 +170,7 @@ Public Class Form1
             mssg.Text += i1.ToString + ": " + coords(1, i1).X.ToString + " " + coords(1, i1).Y.ToString + " "
         Next
     End Sub
-    Sub get_the_coords()
+    Sub get_the_coords_dxf()
         Dim i As Integer = 0
         Dim j As Integer
         Do
@@ -236,6 +236,143 @@ Public Class Form1
             '-------------------------------------------
         Loop Until str = "EOF" Or sr Is Nothing
         numofpoly -= 1
+    End Sub
+    Sub get_the_coords_AI()
+        Dim i, j As Integer
+        i = 0
+        'str = ""
+        str = sr.ReadLine
+        Dim substr As String = ""
+        While str <> "%%EOF" And sr IsNot Nothing
+            i += 1
+            j = 1
+
+            While str <> "f" And str <> "%%EOF" And sr IsNot Nothing
+                'str = sr.ReadLine
+                If str.Length > 2 Then
+                    substr = str.Substring(str.Length - 2)
+
+                End If
+                If substr = " m" Or substr = " l" Or substr = " L" Then
+
+                    substr = str.Remove(str.IndexOf(" "c), str.Length - str.IndexOf(" "c))
+                    coords(i, j).X = CSng(substr)
+                    str = str.Remove(0, str.IndexOf(" "c) + 1)
+                    substr = str.Remove(str.IndexOf(" "c), str.Length - str.IndexOf(" "c))
+                    coords(i, j).Y = CSng(substr)
+                    Label1.Text = substr
+                    str = str.Remove(0, str.Length - 1)
+                    j += 1
+                ElseIf substr = " c" Or substr = " C" Then
+                    'first direction point p1 is the previous point of coordinate system
+                    p1.X = coords(i, j - 1).X
+                    p1.Y = coords(i, j - 1).Y
+                    'p2,p3,p4 is read from the line
+                    'p2
+                    substr = str.Remove(str.IndexOf(" "c), str.Length - str.IndexOf(" "c))
+                    p2.X = CSng(substr)
+                    str = str.Remove(0, str.IndexOf(" "c) + 1)
+                    substr = str.Remove(str.IndexOf(" "c), str.Length - str.IndexOf(" "c))
+                    p2.Y = CSng(substr)
+                    str = str.Remove(0, str.IndexOf(" "c) + 1)
+                    'p3
+                    substr = str.Remove(str.IndexOf(" "c), str.Length - str.IndexOf(" "c))
+                    p3.X = CSng(substr)
+                    str = str.Remove(0, str.IndexOf(" "c) + 1)
+                    substr = str.Remove(str.IndexOf(" "c), str.Length - str.IndexOf(" "c))
+                    p3.Y = CSng(substr)
+                    str = str.Remove(0, str.IndexOf(" "c) + 1)
+                    'p4
+                    substr = str.Remove(str.IndexOf(" "c), str.Length - str.IndexOf(" "c))
+                    p4.X = CSng(substr)
+                    str = str.Remove(0, str.IndexOf(" "c) + 1)
+                    substr = str.Remove(str.IndexOf(" "c), str.Length - str.IndexOf(" "c))
+                    p4.Y = CSng(substr)
+                    str = str.Remove(0, str.IndexOf(" "c) + 1)
+                    'B=P0*(1-t)^3 + 3*P1*t*(1-t)^2 + 3*P2*(1-t)*t^2 + P3*t^3
+                    'gpanel.DrawBezier(myPen, p1, p2, p3, p4)
+                    extrude_bezierpath(i, j)
+
+                    j += point_num
+                End If
+                str = sr.ReadLine
+
+            End While
+            numofpoints(i) = j - 1
+            'check tình trạng trùng lặp của 2 đỉnh cuối
+            
+            If str <> "%%EOF" Then
+                str = sr.ReadLine
+            End If
+        End While
+        numofpoly = i - 1
+
+    End Sub
+    Sub extrude_bezierpath(ByVal i As Integer, ByVal j As Integer)
+        Dim k As Integer
+        Dim coord_temp(0 To 100) As PointF
+        k = j
+        Dim seg_length As Double = 0
+        point_num = 60
+        Dim s As Integer = point_num
+        For t = 1 To s
+            coord_temp(t).X = CSng(p1.X * (1 - t / s) ^ 3 + 3 * p2.X * (t / s) * (1 - t / s) ^ 2 + 3 * p3.X * (1 - t / s) * (t / s) ^ 2 + p4.X * (t / s) ^ 3)
+            coord_temp(t).Y = CSng(p1.Y * (1 - t / s) ^ 3 + 3 * p2.Y * (t / s) * (1 - t / s) ^ 2 + 3 * p3.Y * (1 - t / s) * (t / s) ^ 2 + p4.Y * (t / s) ^ 3)
+        Next
+        'calculate segment length
+        For t = 2 To s
+            seg_length += len(coord_temp(t - 1), coord_temp(t))
+        Next
+
+        Label11.Text += " " + Math.Round(seg_length, 2).ToString
+        If seg_length < 10 Then
+            point_num = 3
+        ElseIf seg_length > 10 And seg_length < 20 Then
+            point_num = 4
+        Else
+            point_num = CInt(seg_length / 14)
+        End If
+        'record points to coords array
+        s = point_num
+        For t = 1 To s
+            coords(i, k).X = CSng(p1.X * (1 - t / s) ^ 3 + 3 * p2.X * (t / s) * (1 - t / s) ^ 2 + 3 * p3.X * (1 - t / s) * (t / s) ^ 2 + p4.X * (t / s) ^ 3)
+            coords(i, k).Y = CSng(p1.Y * (1 - t / s) ^ 3 + 3 * p2.Y * (t / s) * (1 - t / s) ^ 2 + 3 * p3.Y * (1 - t / s) * (t / s) ^ 2 + p4.Y * (t / s) ^ 3)
+            k += 1
+        Next
+    End Sub
+    Sub find_boundary()
+        For i1 = 1 To numofpoly
+            For j1 = 1 To numofpoints(i1)
+                If coords(i1, j1).X < minx Then
+                    minx = coords(i1, j1).X
+                End If
+                If coords(i1, j1).X > maxx Then
+                    maxx = coords(i1, j1).X
+                End If
+                If coords(i1, j1).Y < miny Then
+                    miny = coords(i1, j1).Y
+                End If
+                If coords(i1, j1).Y > maxy Then
+                    maxy = coords(i1, j1).Y
+                End If
+            Next
+        Next
+    End Sub
+    Sub scale_coords()
+        Dim sc_factor As Single = 2.83464
+        Label9.Text = coords(1, 1).ToString
+        For i1 = 1 To numofpoly
+            For j1 = 1 To numofpoints(i1)
+                If coords(i1, j1).X > minx Then
+                    coords(i1, j1).X = (coords(i1, j1).X - minx * (1 - sc_factor)) / sc_factor
+                End If
+                If coords(i1, j1).Y > miny Then
+                    coords(i1, j1).Y = (coords(i1, j1).Y - miny * (1 - sc_factor)) / sc_factor
+                End If
+            Next
+        Next
+        Label9.Text += " " + coords(1, 1).ToString
+        Label10.Text += minx.ToString + " " + miny.ToString
     End Sub
     Sub initialize_file()
         Panel1.Refresh()
@@ -348,7 +485,7 @@ Public Class Form1
                 gpanel.DrawRectangle(myPen, rect)
                 fm.Alignment = StringAlignment.Near
                 'draw lengh value of whole segment
-                gpanel.DrawString(" lengh=" + CStr(poly_len(i1)), f, Brushes.Brown, p.X, p.Y + text_size - 6, fm)
+                gpanel.DrawString(" lengh=" + CStr(poly_len(i1)), f, Brushes.Brown, p.X, p.Y + text_size - 2, fm)
                 p.Y += 35
                 p.X = minx
             Next
@@ -357,7 +494,7 @@ Public Class Form1
     Function len_seg(ByVal i1 As Integer, ByVal aa As Integer, ByVal bb As Integer) As Double
         len_seg = 0
         For j1 = aa To bb - 1
-            len_seg += Poly_scale * len(coords(i1, j1), coords(i1, j1 + 1))
+            len_seg += len(coords(i1, j1), coords(i1, j1 + 1))
         Next
     End Function
     Function len(ByVal p1 As PointF, ByVal p2 As PointF) As Double
@@ -371,11 +508,11 @@ Public Class Form1
             gpanel.DrawLine(myPen, coords(i1, 1).X - 3, coords(i1, 1).Y, coords(i1, 1).X + 3, coords(i1, 1).Y)
             myPen.Color = Color.White
             For j1 = 2 To numofpoints(i1) - 1
-                If ang_out(i1, j1) >= 30 Or ang_out(i1, j1) <= -30 Then
-                    myPen.Width = 6
-                    myPen.Color = Color.Blue
-                    gpanel.DrawLine(myPen, coords(i1, j1).X - 3, coords(i1, j1).Y, coords(i1, j1).X + 3, coords(i1, j1).Y)
-                End If
+                'If ang_out(i1, j1) >= 30 Or ang_out(i1, j1) <= -30 Then
+                myPen.Width = 3
+                myPen.Color = Color.Blue
+                gpanel.DrawLine(myPen, coords(i1, j1).X - 1, coords(i1, j1).Y, coords(i1, j1).X + 1, coords(i1, j1).Y)
+                'End If
             Next
             myPen.Width = 4
             myPen.Color = Color.Blue
@@ -416,6 +553,7 @@ Public Class Form1
                 If Is_Inside(i1) = True Then
                     ang_out(i1, j1) = -ang_out(i1, j1)
                 End If
+                ang_out(i1, numofpoints(i1)) = ang_out(i1, 1)
             Next
         Next
     End Sub
@@ -474,7 +612,7 @@ Public Class Form1
             For j1 = 1 To numofpoints(i1) - 1
                 tmpx = CDbl((coords(i1, j1).X - coords(i1, j1 + 1).X) * (coords(i1, j1).X - coords(i1, j1 + 1).X))
                 tmpy = CDbl((coords(i1, j1).Y - coords(i1, j1 + 1).Y) * (coords(i1, j1).Y - coords(i1, j1 + 1).Y))
-                poly_len(i1) += Poly_scale * (tmpx + tmpy) ^ 0.5
+                poly_len(i1) += (tmpx + tmpy) ^ 0.5
             Next
             str = CStr(poly_len(i1))
             If str.Length - str.IndexOf("."c) - 3 > 0 And str.IndexOf("."c) > 0 Then
@@ -512,13 +650,13 @@ Public Class Form1
         End If
     End Function
     Sub printtext_poly()
-        Dim f As New Font("Arial", text_size)
+        Dim f As New Font("Arial", 2)
         Dim br As New SolidBrush(Color.Aqua)
         For i1 = 1 To numofpoly
             For j1 = 1 To numofpoints(i1) - 1
-                If ang_out(i1, j1) > 20 Or ang_out(i1, j1) < -20 Then
-                    gpanel.DrawString(" " + CStr(ang_out(i1, j1)), f, br, coords(i1, j1).X, coords(i1, j1).Y - 4)
-                End If
+                'If ang_out(i1, j1) > 20 Or ang_out(i1, j1) < -20 Then
+                gpanel.DrawString(" " + CStr(ang_out(i1, j1)), f, br, coords(i1, j1).X, coords(i1, j1).Y - 4)
+                'End If
             Next
         Next
 
@@ -635,7 +773,7 @@ Public Class Form1
             draw_poly_panel()
             draw_points()
             printtext_poly()
-            'extrude_poly()
+            extrude_poly()
             'export_coords()
         End If
     End Sub
@@ -647,7 +785,7 @@ Public Class Form1
             draw_poly_panel()
             draw_points()
             printtext_poly()
-            'extrude_poly()
+            extrude_poly()
             'export_coords()
         End If
     End Sub
@@ -763,11 +901,11 @@ Public Class Form1
                 'get length from id->j1-1
                 seg = get_length_from(i2, id, j1 - 1)
                 seg1 = seg
-                mssg.Text += " " + seg.ToString
+                'mssg.Text += " " + seg.ToString
                 'fwd(offs-seg)
                 fwd(offs - seg)
                 If id <= numofpoints(i2) - 1 Then
-                    bend(id)
+                    bend(ang_out(i2, id))
                 End If
                 quantity -= 1
                 'bend hết các đoạn trong j1-1,j1
@@ -776,18 +914,18 @@ Public Class Form1
                     fwd(seg)
                     id += 1
                     If id <= numofpoints(i2) - 1 Then
-                        bend(id)
+                        bend(ang_out(i2, id))
                     End If
                 Next
                 'fwd đoạn thừa nếu ko phải ở đỉnh sau cuối
                 If j1 <= numofpoints(i2) Then
                     seg = get_length_from(i2, id, j1)
-                    mssg.Text += " " + seg.ToString
+                    'mssg.Text += " " + seg.ToString
                     fwd(seg - offs)
                 End If
             End If
             If j1 <= numofpoints(i2) Then
-                cut(j1)
+                cut(ang_out(i2, j1))
             End If
         Next
         'đỉnh cần bend cuối cùng nằm tại vị trí bend
@@ -852,28 +990,51 @@ Public Class Form1
         For j1 = 1 To numofpoints(i2) - 1
             seg += len(coords(i2, j1), coords(i2, j1 + 1))
             fwd(len(coords(i2, j1), coords(i2, j1 + 1)))
-            cut(j1 + 1)
+            cut(ang_out(i2, j1 + 1))
         Next
         seg -= len(coords(i2, 1), coords(i2, 2))
         fwd(offs - seg)
-        bend(2)
+        bend(ang_out(i2, 2))
         For j1 = 2 To numofpoints(i2) - 1
             fwd(len(coords(i2, j1), coords(i2, j1 + 1)))
-            bend(j1 + 1)
+            bend(ang_out(i2, j1 + 1))
         Next
     End Sub
     Sub fwd(ByVal leng As Double)
-        mssg.Text += " fwd" + leng.ToString
-
+        Dim str As String
+        str = leng.ToString
+        If str.Length - str.IndexOf("."c) - 3 > 0 And str.IndexOf("."c) > 0 Then
+            str = str.Remove(str.IndexOf("."c) + 3, str.Length - str.IndexOf("."c) - 3)
+        End If
+        leng = CDbl(str)
+        mss2send.Text += "F" + leng.ToString + "-"
     End Sub
     Sub prv(ByVal leng As Double)
-
+        Dim str As String
+        str = leng.ToString
+        If str.Length - str.IndexOf("."c) - 3 > 0 And str.IndexOf("."c) > 0 Then
+            str = str.Remove(str.IndexOf("."c) + 3, str.Length - str.IndexOf("."c) - 3)
+        End If
+        leng = CDbl(str)
+        mss2send.Text += "P" + leng.ToString + "-"
     End Sub
     Sub cut(ByVal angle As Double)
-        mssg.Text += " cut" + angle.ToString
+        Dim str As String
+        str = angle.ToString
+        If str.Length - str.IndexOf("."c) - 3 > 0 And str.IndexOf("."c) > 0 Then
+            str = str.Remove(str.IndexOf("."c) + 3, str.Length - str.IndexOf("."c) - 3)
+        End If
+        angle = CDbl(str)
+        mss2send.Text += "C" + angle.ToString + "-"
     End Sub
     Sub bend(ByVal angle As Double)
-        mssg.Text += " bend" + angle.ToString
+        Dim str As String
+        str = angle.ToString
+        If str.Length - str.IndexOf("."c) - 3 > 0 And str.IndexOf("."c) > 0 Then
+            str = str.Remove(str.IndexOf("."c) + 3, str.Length - str.IndexOf("."c) - 3)
+        End If
+        angle = CDbl(str)
+        mss2send.Text += "B" + angle.ToString + "-"
     End Sub
 
     Private Sub Button_Open_port_Click(ByVal sender As System.Object, ByVal e As System.EventArgs)
@@ -907,7 +1068,7 @@ Public Class Form1
                 draw_poly_panel()
                 draw_points()
                 printtext_poly()
-                'extrude_poly()
+                extrude_poly()
 
             End If
         Else
@@ -929,7 +1090,7 @@ Public Class Form1
                 draw_poly_panel()
                 draw_points()
                 printtext_poly()
-                'extrude_poly()
+                extrude_poly()
             End If
         End If
     End Sub
@@ -947,6 +1108,7 @@ Public Class Form1
             draw_poly_panel()
             draw_points()
             printtext_poly()
+            extrude_poly()
         End If
     End Sub
     Private Sub Panel1_MouseUp(ByVal sender As Object, ByVal e As System.Windows.Forms.MouseEventArgs) Handles Panel1.MouseUp
@@ -1014,15 +1176,15 @@ Public Class Form1
         End If
     End Function
     Private Sub Form1_Paint(ByVal sender As Object, ByVal e As System.Windows.Forms.PaintEventArgs) Handles Me.Paint
-        'Panel1.Refresh()
+
         draw_poly_panel()
-        'gpanel.DrawLine(myPen, 150, 150, 150, 155)
+
         draw_points()
         printtext_poly()
-        'extrude_poly()
+        extrude_poly()
     End Sub
 
-    
+
 
     Private Sub Panel1_MouseDown(ByVal sender As Object, ByVal e As System.Windows.Forms.MouseEventArgs) Handles Panel1.MouseDown
         If e.Button = Windows.Forms.MouseButtons.Right Then
@@ -1031,7 +1193,7 @@ Public Class Form1
             Label1.Text = e.X.ToString + " " + e.Y.ToString
         End If
     End Sub
-    
+
 
     Sub set_all_selected()
         For i1 = 1 To numofpoly
@@ -1117,11 +1279,28 @@ Public Class Form1
 
     Private Sub OpenToolStripButton_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles OpenToolStripButton.Click
         Dim OpenfileDialog1 As New OpenFileDialog
+        Dim extension_str As Char
         If OpenfileDialog1.ShowDialog() = System.Windows.Forms.DialogResult.OK Then
+
             sr = New System.IO.StreamReader(OpenfileDialog1.FileName)
+            Dim fi As New IO.FileInfo(OpenfileDialog1.FileName)
+            extension_str = fi.ToString.Last
+            Label7.Text = extension_str
             initialize_file()
-            get_the_coords()
-            transform_coords()
+
+            If extension_str = "f" Then
+                get_the_coords_dxf()
+                transform_coords()
+            ElseIf extension_str = "i" Then
+                get_the_coords_AI()
+                find_boundary()
+                Label3.Text = numofpoly.ToString
+                Label8.Text = ang_out(1, 2).ToString + " len " + len(coords(1, 1), coords(1, 6)).ToString
+                transform_coords()
+                scale_coords()
+                find_boundary()
+            End If
+            trim_excess_vertex()
             movecoords(dx, dy)
             draw_poly_panel()
             in_outside()
@@ -1129,16 +1308,30 @@ Public Class Form1
             corect_direct()
             len_measure()
             angle_measure()
-            Poly_scale = 1
             Text_scale.Text = "100"
             mssg.Text = ""
             export_coords()
             draw_points()
             printtext_poly()
-            'extrude_poly()
-        End If
+            extrude_poly()
+            End If
     End Sub
-
+    Sub trim_excess_vertex()
+        Label11.Text = ""
+        For i1 = 1 To numofpoly
+            If coords(i1, 1) = coords(i1, 2) Then
+                For j1 = 1 To numofpoints(i1) - 1
+                    coords(i1, j1) = coords(i1, j1 + 1)
+                Next
+                numofpoints(i1) -= 1
+                Label11.Text += "trimaa" + i1.ToString
+            End If
+            If coords(i1, numofpoints(i1)) = coords(i1, numofpoints(i1) - 1) Then
+                numofpoints(i1) -= 1
+                Label11.Text += "trim" + i1.ToString
+            End If
+        Next
+    End Sub
     Private Sub ToolStripButton2_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ToolStripButton2.Click
         If numofpoly > 0 Then
             scx = 10
@@ -1153,7 +1346,7 @@ Public Class Form1
             draw_poly_panel()
             draw_points()
             printtext_poly()
-            'extrude_poly()
+            extrude_poly()
             'export_coords()
         End If
     End Sub
@@ -1175,7 +1368,7 @@ Public Class Form1
     Private Sub ToolStripButton15_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ToolStripButton15.Click
         set_all_unselected()
 
-        
+
     End Sub
 
     Private Sub ToolStripButton17_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ToolStripButton17.Click
@@ -1195,19 +1388,10 @@ Public Class Form1
         Form_Setup.Show()
     End Sub
 
-    Private Sub ToolStripButton18_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ToolStripButton18.Click
-        If Processing = False Then
-            If IsNumeric(Text_scale.Text) Then
-                Poly_scale = CDbl(Text_scale.Text) / 100
-            End If
-        End If
-        mssg.Text = Poly_scale.ToString
-    End Sub
-
     Private Sub ToolStripButton19_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ToolStripButton19.Click
-        offs = 25
+        offs = 324
         Processing = True
-        mssg.Text = poly_len(1).ToString
+        mss2send.Text = ""
         For i1 = 1 To numofpoly
             If poly_len(i1) - len(coords(i1, 1), coords(i1, 2)) > offs Then
                 long_process(i1)

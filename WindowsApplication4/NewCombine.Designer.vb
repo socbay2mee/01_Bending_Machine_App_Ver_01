@@ -85,6 +85,8 @@ Partial Class Form1
         Me.EditToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ViewToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.LanguageToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.EnglishToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.TiếngViệtToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.HelpToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStrip2 = New System.Windows.Forms.ToolStrip()
@@ -100,7 +102,6 @@ Partial Class Form1
         Me.ToolStripButton17 = New System.Windows.Forms.ToolStripButton()
         Me.ToolStripButton15 = New System.Windows.Forms.ToolStripButton()
         Me.ToolStripSeparator5 = New System.Windows.Forms.ToolStripSeparator()
-        Me.ToolStripButton18 = New System.Windows.Forms.ToolStripButton()
         Me.ToolStripSeparator6 = New System.Windows.Forms.ToolStripSeparator()
         Me.ToolStripButton_Setup = New System.Windows.Forms.ToolStripButton()
         Me.ToolStripSeparator7 = New System.Windows.Forms.ToolStripSeparator()
@@ -111,6 +112,10 @@ Partial Class Form1
         Me.toolStripSeparator3 = New System.Windows.Forms.ToolStripSeparator()
         Me.ToolStrip1 = New System.Windows.Forms.ToolStrip()
         Me.OpenToolStripButton = New System.Windows.Forms.ToolStripButton()
+        Me.Label8 = New System.Windows.Forms.Label()
+        Me.Label10 = New System.Windows.Forms.Label()
+        Me.Label11 = New System.Windows.Forms.Label()
+        Me.mss2send = New System.Windows.Forms.RichTextBox()
         Me.GroupBox6.SuspendLayout()
         Me.GroupBox8.SuspendLayout()
         Me.GroupBox7.SuspendLayout()
@@ -749,9 +754,22 @@ Partial Class Form1
         '
         'LanguageToolStripMenuItem
         '
+        Me.LanguageToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.EnglishToolStripMenuItem, Me.TiếngViệtToolStripMenuItem})
         Me.LanguageToolStripMenuItem.Name = "LanguageToolStripMenuItem"
         Me.LanguageToolStripMenuItem.Size = New System.Drawing.Size(71, 20)
         Me.LanguageToolStripMenuItem.Text = "Language"
+        '
+        'EnglishToolStripMenuItem
+        '
+        Me.EnglishToolStripMenuItem.Name = "EnglishToolStripMenuItem"
+        Me.EnglishToolStripMenuItem.Size = New System.Drawing.Size(127, 22)
+        Me.EnglishToolStripMenuItem.Text = "English"
+        '
+        'TiếngViệtToolStripMenuItem
+        '
+        Me.TiếngViệtToolStripMenuItem.Name = "TiếngViệtToolStripMenuItem"
+        Me.TiếngViệtToolStripMenuItem.Size = New System.Drawing.Size(127, 22)
+        Me.TiếngViệtToolStripMenuItem.Text = "Tiếng Việt"
         '
         'ToolToolStripMenuItem
         '
@@ -867,15 +885,6 @@ Partial Class Form1
         Me.ToolStripSeparator5.Name = "ToolStripSeparator5"
         Me.ToolStripSeparator5.Size = New System.Drawing.Size(6, 25)
         '
-        'ToolStripButton18
-        '
-        Me.ToolStripButton18.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text
-        Me.ToolStripButton18.Image = CType(resources.GetObject("ToolStripButton18.Image"), System.Drawing.Image)
-        Me.ToolStripButton18.ImageTransparentColor = System.Drawing.Color.Magenta
-        Me.ToolStripButton18.Name = "ToolStripButton18"
-        Me.ToolStripButton18.Size = New System.Drawing.Size(57, 22)
-        Me.ToolStripButton18.Text = "Set Scale"
-        '
         'ToolStripSeparator6
         '
         Me.ToolStripSeparator6.Name = "ToolStripSeparator6"
@@ -928,7 +937,7 @@ Partial Class Form1
         Me.ToolStrip1.BackColor = System.Drawing.SystemColors.GradientInactiveCaption
         Me.ToolStrip1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None
         Me.ToolStrip1.GripMargin = New System.Windows.Forms.Padding(10)
-        Me.ToolStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.OpenToolStripButton, Me.SaveToolStripButton, Me.toolStripSeparator, Me.ToolStripButton2, Me.ToolStripSeparator2, Me.ToolStripButton14, Me.ToolStripButton17, Me.ToolStripButton15, Me.ToolStripSeparator5, Me.ToolStripButton18, Me.ToolStripSeparator6, Me.ToolStripButton_Setup, Me.ToolStripSeparator7, Me.ToolStripButton19, Me.ToolStripSeparator8, Me.ToolStripComboBox1, Me.toolStripSeparator1, Me.toolStripSeparator3})
+        Me.ToolStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.OpenToolStripButton, Me.SaveToolStripButton, Me.toolStripSeparator, Me.ToolStripButton2, Me.ToolStripSeparator2, Me.ToolStripButton14, Me.ToolStripButton17, Me.ToolStripButton15, Me.ToolStripSeparator5, Me.ToolStripSeparator6, Me.ToolStripButton_Setup, Me.ToolStripSeparator7, Me.ToolStripButton19, Me.ToolStripSeparator8, Me.ToolStripComboBox1, Me.toolStripSeparator1, Me.toolStripSeparator3})
         Me.ToolStrip1.Location = New System.Drawing.Point(0, 24)
         Me.ToolStrip1.Name = "ToolStrip1"
         Me.ToolStrip1.Padding = New System.Windows.Forms.Padding(0)
@@ -947,12 +956,51 @@ Partial Class Form1
         Me.OpenToolStripButton.Size = New System.Drawing.Size(23, 22)
         Me.OpenToolStripButton.Text = "&Open"
         '
+        'Label8
+        '
+        Me.Label8.AutoSize = True
+        Me.Label8.Location = New System.Drawing.Point(648, 634)
+        Me.Label8.Name = "Label8"
+        Me.Label8.Size = New System.Drawing.Size(39, 13)
+        Me.Label8.TabIndex = 72
+        Me.Label8.Text = "Label8"
+        '
+        'Label10
+        '
+        Me.Label10.AutoSize = True
+        Me.Label10.Location = New System.Drawing.Point(678, 664)
+        Me.Label10.Name = "Label10"
+        Me.Label10.Size = New System.Drawing.Size(45, 13)
+        Me.Label10.TabIndex = 73
+        Me.Label10.Text = "Label10"
+        '
+        'Label11
+        '
+        Me.Label11.AutoSize = True
+        Me.Label11.Location = New System.Drawing.Point(766, 653)
+        Me.Label11.Name = "Label11"
+        Me.Label11.Size = New System.Drawing.Size(45, 13)
+        Me.Label11.TabIndex = 74
+        Me.Label11.Text = "Label11"
+        '
+        'mss2send
+        '
+        Me.mss2send.Location = New System.Drawing.Point(1130, 49)
+        Me.mss2send.Name = "mss2send"
+        Me.mss2send.Size = New System.Drawing.Size(96, 31)
+        Me.mss2send.TabIndex = 75
+        Me.mss2send.Text = ""
+        '
         'Form1
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.SystemColors.Control
         Me.ClientSize = New System.Drawing.Size(1354, 689)
+        Me.Controls.Add(Me.mss2send)
+        Me.Controls.Add(Me.Label11)
+        Me.Controls.Add(Me.Label10)
+        Me.Controls.Add(Me.Label8)
         Me.Controls.Add(Me.ToolStrip2)
         Me.Controls.Add(Me.ToolStrip1)
         Me.Controls.Add(Me.Label9)
@@ -1082,7 +1130,6 @@ Partial Class Form1
     Friend WithEvents ToolStripButton17 As System.Windows.Forms.ToolStripButton
     Friend WithEvents ToolStripButton15 As System.Windows.Forms.ToolStripButton
     Friend WithEvents ToolStripSeparator5 As System.Windows.Forms.ToolStripSeparator
-    Friend WithEvents ToolStripButton18 As System.Windows.Forms.ToolStripButton
     Friend WithEvents ToolStripSeparator6 As System.Windows.Forms.ToolStripSeparator
     Friend WithEvents ToolStripButton_Setup As System.Windows.Forms.ToolStripButton
     Friend WithEvents ToolStripSeparator7 As System.Windows.Forms.ToolStripSeparator
@@ -1093,5 +1140,11 @@ Partial Class Form1
     Friend WithEvents toolStripSeparator3 As System.Windows.Forms.ToolStripSeparator
     Friend WithEvents ToolStrip1 As System.Windows.Forms.ToolStrip
     Friend WithEvents OpenToolStripButton As System.Windows.Forms.ToolStripButton
+    Friend WithEvents EnglishToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents TiếngViệtToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents Label8 As System.Windows.Forms.Label
+    Friend WithEvents Label10 As System.Windows.Forms.Label
+    Friend WithEvents Label11 As System.Windows.Forms.Label
+    Friend WithEvents mss2send As System.Windows.Forms.RichTextBox
 
 End Class
